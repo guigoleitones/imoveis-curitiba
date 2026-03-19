@@ -1,6 +1,4 @@
 import streamlit as st
-import gspread
-from google.auth import default
 import pandas as pd
 
 st.set_page_config(page_title="Imóveis Curitiba", layout="wide")
@@ -8,15 +6,8 @@ st.set_page_config(page_title="Imóveis Curitiba", layout="wide")
 st.title("🏠 Imóveis em Curitiba")
 st.write("Encontre os melhores imóveis para alugar em Curitiba")
 
-# Conectar ao Google Sheets
-creds, _ = default()
-gc = gspread.authorize(creds)
-sh = gc.open_by_key("1HZ11ayBVI8K-cpRBNDgS8Mf6J3pjwDGQgnwWkweHLxw")
-worksheet = sh.sheet1
-
-# Pegar dados
-dados = worksheet.get_all_records()
-df = pd.DataFrame(dados)
+# Carregar CSV
+df = pd.read_csv("imoveis.csv")
 
 # Filtros
 col1, col2 = st.columns(2)
